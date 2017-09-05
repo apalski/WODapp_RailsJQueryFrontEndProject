@@ -15,6 +15,10 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'bcrypt'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-facebook'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -38,7 +42,8 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
   gem 'pry'
-
+  gem "capybara"
+  gem "sqlite3"
   # Adds step-by-step debugging and stack navigation capabilities to pry using byebug. To use, invoke pry normally.
   gem 'pry-byebug'
 end
@@ -49,4 +54,6 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem "pg", group: :production
 end
