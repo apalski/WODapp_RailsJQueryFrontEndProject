@@ -1,0 +1,14 @@
+
+<h1>Edit your WOD</h1>
+
+<%= form_for [@user, @userwod] do |f| %>
+	<%= render 'application/errors', target: @userwod %>
+	<%= @userwod.name %><br>
+	<%= render 'form', f: f %>
+	<%= f.submit "Update WOD" %>
+<% end %>	
+
+<%= link_to "Delete", user_userwod_path(current_user, @userwod), method: :delete %>
+
+
+	

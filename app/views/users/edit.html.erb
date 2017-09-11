@@ -1,0 +1,25 @@
+
+<h1>Edit your profile:</h1>
+
+<%= form_for @user do |f| %>
+	<%= render 'application/errors', target: @user %>
+	<%= render 'form', f: f %>
+	<div class="field" >
+		<%= f.label :name %>
+		<%= f.text_field :name %><br><br>
+	</div>
+	<div class="field" >
+		<%= f.label :password %>
+		<%= f.password_field :password, placeholder: "Enter existing or new" %><br><br>
+	</div>
+	<% if current_user.owner == true && current_user != @user %>
+		<div class="field" >
+			<%= f.label :owner %>
+			<%= f.label :owner, "true", value: true %>
+			<%= f.radio_button :owner, true %>
+			<%= f.label :owner, "false", value: false %>
+			<%= f.radio_button :owner, false %>
+		</div>
+	<% end %>	
+	<%= f.submit "Update Profile" %>	
+<% end %>	

@@ -1,0 +1,12 @@
+
+<h1>Enter movement results</h1>	
+
+<%= form_for [@user, @usermovement] do |f| %>
+	<%= f.label :name %>
+	<% names = @movements.map {|move| [move.name]} %>
+	<%= f.select :name, names, :prompt => "Select One" %><br>
+	<%= render 'application/errors', target: @usermovement %>
+	<%= render 'form', f: f %>
+	<%= f.submit "Create movement" %>	
+<% end %>	
+		

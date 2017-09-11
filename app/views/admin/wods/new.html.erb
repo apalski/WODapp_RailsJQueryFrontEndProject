@@ -1,0 +1,9 @@
+
+<h1>Create a new WOD</h1>
+
+<%= form_for @wod do |f| %>
+	<%= render 'application/errors', target: @wod %>
+	<%= render 'form', f: f %>	
+	<%= f.submit %>
+<% end %>
+	

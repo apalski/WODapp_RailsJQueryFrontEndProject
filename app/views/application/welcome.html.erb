@@ -1,0 +1,23 @@
+
+<h1>Welcome to WODapp <%= @user.name %></h1>
+
+<ul>
+	<% if current_user.owner == true %>
+		<h2>As Owner:</h2>
+		<li><%= link_to "Create a new movement", new_admin_movement_path %></li>
+		<li><%= link_to "Create a new WOD", new_admin_wod_path %></li>
+		<li><%= link_to "See all available movements", admin_movements_path %></li>
+		<li><%= link_to "See all available WODs", admin_wods_path %></li>
+		<li><%= link_to "View current users of WODapp", users_path %></li>
+		<h2>As Athlete:</h2>
+	<% end %>	
+	<li><%= link_to "Enter a new movement result", new_user_usermovement_path(current_user) %></li>
+	<li><%= link_to "Enter a new WOD result", new_user_userwod_path(current_user) %></li>
+	<li><%= link_to "See all your movement results", user_usermovements_path(@user) %></li>
+	<li><%= link_to "See all your WOD results", user_userwods_path(@user) %></li>
+	<li><%= link_to "See all available movements", admin_movements_path %></li>
+	<li><%= link_to "See all available WODs", admin_wods_path %></li>
+	<li><%= link_to "View your profile page", user_path(@user) %></li>
+</ul>	
+
+

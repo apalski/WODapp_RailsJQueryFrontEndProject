@@ -1,0 +1,12 @@
+
+<h1>Your WODs:</h1>
+
+<ul>
+	<% @userwods.each do |userwod| %>
+		<%= render 'show', userwod: userwod %><br>
+	<% end %>	
+</ul>
+
+<h3><%= link_to "Enter a new WOD result", new_user_userwod_path(current_user) %></h3><br>	
+
+<%= render 'prs' %>

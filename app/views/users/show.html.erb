@@ -1,0 +1,22 @@
+
+<h1><%= @user.name %> Profile</h1>
+
+<ul>
+	<li>User name: <%= @user.name %></li>
+	<li>Email address: <%= @user.email %></li>
+	<% if current_user.owner == true %>
+		<li>Owner Status: <%= @user.owner %></li>
+	<% end %>	
+</ul>		
+
+<%  if current_user.uid == nil %>
+	<li><%= link_to "Edit your profile", edit_user_path(current_user) %></li>
+<% else %>
+	<li>To make changes to your profile please contact your box owner</li>
+<% end %>	
+<li><%= link_to "Enter a new movement result", new_user_usermovement_path(current_user) %></li>
+<li><%= link_to "Enter a new WOD result", new_user_userwod_path(current_user) %></li>
+<li><%= link_to "Go to Your Movements", user_usermovements_path(current_user) %></li>
+<li><%= link_to "Go to Your WODs", user_userwods_path(current_user) %></li>
+
+

@@ -1,0 +1,11 @@
+
+<h1>Edit movement: </h1>
+
+<%= form_for @movement do |f| %>
+	<%= render 'application/errors', target: @movement %>
+	<%= render 'form', f: f %>
+	<%= f.submit %>	
+<% end %><br>	
+<% if current_user.owner == true %>
+	<%= link_to "Delete", admin_movement_path(@movement), method: :delete %> 
+<% end %>	

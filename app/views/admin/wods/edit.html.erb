@@ -1,0 +1,11 @@
+
+<h1>Edit WOD:</h1>
+
+<%= form_for @wod do |f| %>
+	<%= render 'application/errors', target: @wod %>
+	<%= render 'form', f: f %><br>
+	<%= f.submit %>
+<% end %>
+<% if current_user.owner == true %>
+	<%= link_to "Delete", admin_wod_path(@wod), method: :delete %>
+<% end %>	

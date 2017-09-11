@@ -1,0 +1,18 @@
+<h1>Enter WOD results:</h1>
+
+<%= form_for [@user, @userwod] do |f| %>
+	<%= render 'application/errors', target: @userwod %>
+	<%= f.label :name %>
+	<% names = @wods.map {|moves| [moves.title]} %>
+	<%= f.select :name, names, :prompt => "Select One", :selected => params[:name] %><br><br>
+	<%= render 'form', f: f %>
+	<%= f.submit "Create WOD" %>	
+<% end %>	
+
+<h1>WOD descriptions:</h1>
+
+<% @owner_wods.each do |wod| %>
+	<%= render 'admin/wods/show', wod: wod %>
+<% end %>	
+
+

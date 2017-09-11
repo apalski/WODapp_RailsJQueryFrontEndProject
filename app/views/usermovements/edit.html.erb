@@ -1,0 +1,11 @@
+
+<h1>Edit your movement</h1>
+
+<%= form_for [@user, @usermovement] do |f| %>
+	<%= @usermovement.name %>
+	<%= render 'application/errors', target: @usermovement %>
+	<%= render 'form', f: f %>
+	<%= f.submit "Update movement" %>	
+<% end %>	
+		
+<%= link_to "Delete", user_usermovement_path(current_user, @usermovement), method: :delete %> 	

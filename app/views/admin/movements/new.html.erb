@@ -1,0 +1,8 @@
+
+<h1>Create a new movement:</h1>
+
+<%= form_for @movement do |f| %>
+	<%= render 'application/errors', target: @movement %>
+	<%= render 'form', f: f %>
+	<%= f.submit %>	
+<% end %>	

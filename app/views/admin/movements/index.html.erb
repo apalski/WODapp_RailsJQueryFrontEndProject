@@ -1,0 +1,12 @@
+
+<h1>Existing movements are:</h1>
+
+<ul>
+	<% @movements.each do |movement| %>
+		<%= render 'show', movement: movement %><br>
+	<% end %>	
+</ul>
+	
+<% if current_user.owner == true %>
+	<h2><%= link_to "Create a new movement", new_admin_movement_path %></h2>
+<% end %>	
