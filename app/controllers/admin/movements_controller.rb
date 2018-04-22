@@ -7,6 +7,8 @@ class Admin::MovementsController < ApplicationController
 		# alphabetize the list of movements
 		@movements = Admin::Movement.all.sort_by {|move| move.name.downcase}
 		@user = current_user
+
+		render layout: false
 	end
 
 	def new
