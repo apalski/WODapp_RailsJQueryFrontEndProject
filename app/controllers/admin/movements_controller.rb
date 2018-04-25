@@ -8,7 +8,11 @@ class Admin::MovementsController < ApplicationController
 		@movements = Admin::Movement.all.sort_by {|move| move.name.downcase}
 		@user = current_user
 
-		render layout: false
+		respond_to do |format|
+			format.json { render json: @movements, status: 200 }
+			format.js
+			format.html { render layout: false }
+		end
 	end
 
 	def new
@@ -28,6 +32,11 @@ class Admin::MovementsController < ApplicationController
 
 	def show
 		set_movement
+		
+		respond_to do |format|
+			format.json { render json: @movement }
+			format.html { render :show }
+		end	
 	end
 
 	def edit
