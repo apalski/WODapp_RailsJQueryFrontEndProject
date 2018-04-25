@@ -5,13 +5,13 @@
 	<%= render "show", movement: @movement %>
 </ul>	
 
-<p>
+<p> 
+	<%= link_to "Next movement", "#", class: "js-next", data: { nextId: @movement.id } %>
 	<%= link_to "Show all available movements", admin_movements_path, class: "load_movements" %>
 </p> 
 
 <div class="all_movements">
 </div>
-
 
 
 
