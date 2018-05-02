@@ -2,7 +2,7 @@
 
 	# Allow a new user to access the signin page and be created	
 	skip_before_action :require_signin, only: [:new, :create]
-	skip_before_action :restrict_access, only: [:new, :create]
+	# skip_before_action :restrict_access, only: [:new, :create]
 	# Only allows a user to view and edit their own data
 	before_action :user_own_data
 	# Allow a new user to access the signin page and be created	
@@ -39,6 +39,8 @@
 
 	def show
 		set_user
+		@usermovement = @user.usermovements.all.first
+		@userwod = @user.userwods.all.first
 	end
 
 	def edit
