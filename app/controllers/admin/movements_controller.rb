@@ -6,10 +6,7 @@ class Admin::MovementsController < ApplicationController
 	def index
 		@movements = Admin::Movement.all.sort_by {|move| move.name.downcase}
 		@user = current_user
-		# redirect_to admin_movements_path
-		# respond_to do |format|
-		# 	format.js { render layout: false, serializer: Admin::MovementSerializer }
-		# end
+		redirect_to admin_movements_path
 	end
 
 	def new
