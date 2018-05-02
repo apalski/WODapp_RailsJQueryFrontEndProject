@@ -14,7 +14,7 @@ module ApplicationHelper
 			moves = current_user.userwods.by_pr
 		end	
 		if moves.size > 1 
-			combo = moves.combination(2).select {|a,b| a.name == b.name}
+			combo = moves.zip.select {|a,b| a.name == b.name}
 			if !combo.empty?
 				combo = combo.flatten
 				if combo[0].cftype == "time"
