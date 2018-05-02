@@ -1,4 +1,4 @@
-class CreateUsermovements < ActiveRecord::Migration
+class CreateUsermovements < ActiveRecord::Migration[5.1]
   def change
     create_table :usermovements do |t|
     	t.string :name
@@ -6,6 +6,7 @@ class CreateUsermovements < ActiveRecord::Migration
       t.string :cftype
       t.float :result, :precision => 2, :scale => 2
     	t.boolean :pr, default: false
+      t.string :comment
     	t.integer :user_id
     	
       t.timestamps null: false

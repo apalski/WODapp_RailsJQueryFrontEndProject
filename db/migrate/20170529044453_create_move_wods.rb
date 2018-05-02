@@ -1,4 +1,4 @@
-class CreateMoveWods < ActiveRecord::Migration
+class CreateMoveWods < ActiveRecord::Migration[5.1]
   def change
     create_table :move_wods do |t|
     	t.integer :movement_id

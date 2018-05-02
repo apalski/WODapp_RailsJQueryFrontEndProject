@@ -1,4 +1,4 @@
-class CreateWods < ActiveRecord::Migration
+class CreateWods < ActiveRecord::Migration[5.1]
   def change
     create_table :wods do |t|
     	t.string :title
