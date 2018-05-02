@@ -1,19 +1,19 @@
 
 
 		<%= f.hidden_field :user_id %>
-		<div class="field" >
+		<div class="field date" >
 			<%= f.label :date %>
 			<%= date_select :usermovement, :date %><br>
 		</div>
-		<div class="field" >	
+		<div class="field result" >	
 			<%= f.label :result %>
 			<%= f.text_field :result %><br>
 		</div>
-		<div class="field" >
+		<div class="field pr" >
 			<%= f.label :pr %>
 			<%= f.check_box :pr %><br>
 		</div>	
-		<div class="field" >
+		<div class="field comment" >
 			<%= f.label :comment %>
 			<%= f.text_area :comment %><br>
 		</div>	

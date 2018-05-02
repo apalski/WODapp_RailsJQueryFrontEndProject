@@ -1,5 +1,20 @@
-
 <h1>Your movement result: </h1>
 
-<%= render 'show', usermovement: @usermovement %>
+<li class="movementName">Movement: <%= @usermovement.name %></li><br>
+<li class="movementDate">Date Completed: <%= @usermovement.date.strftime("%d %B %Y") %></li><br>
+<% if @usermovement.cftype == "time" %>
+	<li class="movementResult">Result Achieved: <%= @usermovement.result %> minutes</li><br>
+<% elsif @usermovement.cftype == "weight" %>
+	<li class="movementResult">Result Achieved: <%= @usermovement.result %> kgs</li><br>
+<% elsif @usermovement.cftype == "repetitions" %>
+	<li class="movementResult">Result Achieved: <%= @usermovement.result %> reps</li><br>
+<% end %>			
+<li class="movement_cftype">Movement done for: <%= @usermovement.cftype %></li><br>
+<li class="movementPr">PR? (true/false): <%= @usermovement.pr %></li><br>
+<li class="movementComment">Comment: <%= @usermovement.comment %></li><br>
+<div class="">
+	<%= link_to "Edit Movement", edit_user_usermovement_path(current_user, @usermovement) %> |
+	<%= link_to "Delete Movement", user_usermovement_path(current_user, @usermovement), method: :delete %>
+</div>
+<h3>_____________________________________</h3><br>
 
