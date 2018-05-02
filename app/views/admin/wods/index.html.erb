@@ -3,7 +3,8 @@
 
 <ul>
 <% @wods.each do |wod| %>
-	<%= render 'show', wod: wod %><br>
+	<% @wod = wod %>
+	<%= render 'show', wod: @wod %><br>
 <% end %>
 
 <% if current_user.owner == true %>
