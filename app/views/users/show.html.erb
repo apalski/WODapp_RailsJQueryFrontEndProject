@@ -7,16 +7,32 @@
 	<% if current_user.owner == true %>
 		<li>Owner Status: <%= @user.owner %></li>
 	<% end %>	
-</ul>		
+</ul>
+<p>_____________________________________</p>		
 
-<%  if current_user.uid == nil %>
-	<li><%= link_to "Edit your profile", edit_user_path(current_user) %></li>
-<% else %>
-	<li>To make changes to your profile please contact your box owner</li>
-<% end %>	
-<li><%= link_to "Enter a new movement result", new_user_usermovement_path(current_user) %></li>
-<li><%= link_to "Enter a new WOD result", new_user_userwod_path(current_user) %></li>
-<li><%= link_to "Go to Your Movements", user_usermovements_path(current_user) %></li>
-<li><%= link_to "Go to Your WODs", user_userwods_path(current_user) %></li>
+<div>
+	<div>
+		<% if current_user.usermovements.size > 0 %>
+			<%= link_to "Individual Movements", user_usermovement_path(current_user, @usermovement.id), class: "show_movements" %> |
+			<%= link_to "All Movements", user_usermovements_path(current_user.id), class: "load_movements" %><br> 
+		<% else %>
+			<h3>You have no existing movements</h3>
+		<% end %>
+		<%= link_to "New Movement", new_user_usermovement_path(current_user) %><br>
+		<%= link_to "New Wod", new_user_userwod_path(current_user) %><br>
+			<% if current_user.userwods.size > 0 %>
+			<%= link_to "Individual Wods", user_userwod_path(current_user, @userwod.id), class: "show_wods" %> |
+			<%= link_to "All Wods", user_userwods_path(current_user.id), class: "load_wods" %>
+		<% else %>
+			<h3>You have no existing wods</h3>
+		<% end %>	
+	<p>_____________________________________</p>
+	</div>
+</div>
+
+<div class="crossfit-container">
+</div>
+
+
 
 
