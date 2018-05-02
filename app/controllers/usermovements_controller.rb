@@ -8,12 +8,11 @@ class UsermovementsController < ApplicationController
 	skip_before_action :check_user, only: [:index, :new, :create]
 
 	def index
-		if params[:user_id] == current_user.id.to_s
-			# Selects only movements belonging to the current user and alphabetizes the returned list
-			@usermovements = User.find_by(id: params[:user_id]).usermovements.sort_by {|move| move.name.downcase}
-		else
-			redirect_to user_usermovements_path(current_user), notice: "Movements not found"	
-		end		
+		@usermovements = Usermovement.all.where(user: current_user)
+		respond_to do |format|
+			format.html { render :index }
+			format.json { render json: @usermovements }
+		end
 	end
 
 	def new
@@ -27,25 +26,17 @@ class UsermovementsController < ApplicationController
 		set_user
 		set_movement
 		if @usermovement.save
-			move = Admin::Movement.all.find_by(name: @usermovement.name)
-			# Assign a movement type to the users movement
-			@usermovement.cftype = move.movement_type
-			@usermovement.save
-			# Calls to #update_pr if PR is true to ensure only one PR for that type of movement exists
-			if @usermovement.pr == true
-				update_pr(@usermovement)
-			end	
-			redirect_to user_usermovement_path(current_user, @usermovement)
+			render json: @usermovement, status: 201	
 		else
 			render :new
-		end		
+		end	
 	end
 
 	def show
-		if set_usermovement 
-			set_usermovement
-		else
-			redirect_to user_usermovements_path(current_user), notice: "Movement not found"
+		set_usermovement
+		respond_to do |format|
+			format.html { render :show }
+			format.json { render json: @usermovement }
 		end			
 	end
 
@@ -60,14 +51,10 @@ class UsermovementsController < ApplicationController
 		set_movement
 		set_usermovement
 		if @usermovement.update(usermovement_params)
-			# Calls to #update_pr if PR is true to ensure only one PR for that type of movement exists
-			if @usermovement.pr == true
-				update_pr(@usermovement)
-			end	
-			redirect_to user_usermovement_path(current_user, @usermovement)
+			render json: @usermovement
 		else
-			render :edit
-		end		
+			render :edit		
+		end	
 	end
 
 	def destroy
