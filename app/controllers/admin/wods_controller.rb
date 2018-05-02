@@ -18,6 +18,7 @@ class Admin::WodsController < ApplicationController
 	def create
 		set_movements
 		@wod = Admin::Wod.new(wod_params)
+		@wod.owner_id = current_user.id
 		if @wod.save
 			redirect_to admin_wod_path(@wod)
 		else
@@ -27,6 +28,7 @@ class Admin::WodsController < ApplicationController
 
 	def show
 		set_wod
+		@movement = @wod.movements
 	end
 
 	def edit
