@@ -8,12 +8,11 @@ class UserwodsController < ApplicationController
 	skip_before_action :check_user, only: [:index, :new, :create]
 
 	def index
-		if params[:user_id] == current_user.id.to_s
-			# Selects only wods belonging to the current user and alphabetizes the returned list
-			@userwods = User.find(params[:user_id]).userwods.sort_by {|wod| wod.name.downcase}
-		else
-			redirect_to user_userwods_path(current_user), notice: "WODs not found"	
-		end		
+		@userwods = Userwod.all.where(user: current_user)
+		respond_to do |format|
+			format.html { render :index }
+			format.json { render json: @userwods }
+		end
 	end
 
 	def new
@@ -28,24 +27,17 @@ class UserwodsController < ApplicationController
 		set_user
 		set_wod
 		if @userwod.save
-			wod = Admin::Wod.all.find_by(title: @userwod.name)
-			@userwod.cftype = wod.wod_type
-			@userwod.save
-			# Calls to #update_pr if PR is true to ensure only one PR for that type of wod exists
-			if @userwod.pr == true
-				update_pr(@userwod)
-			end	
-			redirect_to user_userwod_path(current_user, @userwod)
+			render json: @userwod, status: 201
 		else
 			render :new
 		end		
 	end
 
 	def show
-		if set_userwod
-			set_userwod
-		else
-			redirect_to user_userwods_path(current_user), notice: "WOD not found"
+		set_userwod
+		respond_to do |format|
+			format.html { render :show }
+			format.json { render json: @userwod }
 		end		
 	end
 
@@ -60,11 +52,7 @@ class UserwodsController < ApplicationController
 		set_wod
 		set_userwod
 		if @userwod.update(userwod_params)
-			# Calls to #update_pr if PR is true to ensure only one PR for that type of wod exists
-			if @userwod.pr == true
-				update_pr(@userwod)
-			end	
-			redirect_to user_userwod_path(current_user, @userwod)
+			redirect_to user_path(current_user)
 		else
 			render :edit
 		end		
