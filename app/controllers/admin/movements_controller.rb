@@ -4,15 +4,12 @@ class Admin::MovementsController < ApplicationController
 	before_action :restrict_access, only: [:new, :create, :edit, :show, :update, :destroy]
 
 	def index
-		# alphabetize the list of movements
 		@movements = Admin::Movement.all.sort_by {|move| move.name.downcase}
 		@user = current_user
-
-		respond_to do |format|
-			format.json { render json: @movements, status: 200 }
-			format.js
-			format.html { render layout: false }
-		end
+		# redirect_to admin_movements_path
+		# respond_to do |format|
+		# 	format.js { render layout: false, serializer: Admin::MovementSerializer }
+		# end
 	end
 
 	def new
@@ -23,6 +20,7 @@ class Admin::MovementsController < ApplicationController
 	def create
 		@user = current_user
 		@movement = Admin::Movement.new(movement_params)
+		@movement.owner_id = current_user.id
 		if @movement.save
 			redirect_to admin_movement_path(@movement)
 		else
@@ -32,11 +30,6 @@ class Admin::MovementsController < ApplicationController
 
 	def show
 		set_movement
-		
-		respond_to do |format|
-			format.json { render json: @movement }
-			format.html { render :show }
-		end	
 	end
 
 	def edit
@@ -67,6 +60,6 @@ class Admin::MovementsController < ApplicationController
 	end
 
 	def movement_params
-		params.require(:admin_movement).permit(:name, :movement_type, :quantity)
+		params.require(:admin_movement).permit(:name, :movement_type, :quantity, :owner_id)
 	end
 end
