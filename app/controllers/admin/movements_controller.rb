@@ -4,9 +4,12 @@ class Admin::MovementsController < ApplicationController
 	before_action :restrict_access, only: [:new, :create, :edit, :show, :update, :destroy]
 
 	def index
-		@movements = Admin::Movement.all.sort_by {|move| move.name.downcase}
+		@movements = Admin::Movement.all
 		@user = current_user
-		redirect_to admin_movements_path
+    respond_to do |format|
+			format.html { render :index }
+			format.json { render json: @movements }
+		end
 	end
 
 	def new
@@ -22,7 +25,7 @@ class Admin::MovementsController < ApplicationController
 			redirect_to admin_movement_path(@movement)
 		else
 			render :new
-		end		
+		end
 	end
 
 	def show
@@ -31,7 +34,7 @@ class Admin::MovementsController < ApplicationController
 
 	def edit
 		set_movement
-		
+
 	end
 
 	def update
@@ -40,14 +43,14 @@ class Admin::MovementsController < ApplicationController
 			redirect_to admin_movement_path(@movement)
 		else
 			render :edit
-		end		
+		end
 	end
 
 	def destroy
 		set_movement.destroy
 		respond_to do |format|
 			format.html {redirect_to admin_movements_path, notice: "Movement was successfully deleted"}
-		end	
+		end
 	end
 
 	private
