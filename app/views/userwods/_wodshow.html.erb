@@ -1,0 +1,13 @@
+<ul>
+    <li>WOD Name: <span class="wod_name"><%= wod.title %></span></li>
+    <li>WOD Type: <span class="wod_type"><%= wod.wod_type %></span></li>
+    <li>Description: <span class="wod_desc"><%= wod.description %></span></li>
+    <li>WOD Movements: <ul><% wod.movements.each do |move| %>
+      <li><span class="move_quantity"><%= move.quantity %></span><span class="move_name"><%= move.name %></span></li>
+    <% end %></ul></li><br>
+    <% if current_user.owner == true %>
+        <%= link_to "Edit WOD", edit_admin_wod_path(wod) %> |
+        <%= link_to "Delete WOD", admin_wod_path(wod), method: :delete %><br>
+    <% end %>
+    <p>________________________________________</p><br>
+</ul>
