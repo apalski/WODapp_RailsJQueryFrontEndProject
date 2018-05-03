@@ -1,5 +1,3 @@
-<%= render 'prs' %>
-
 <div id="new_userwodForm">
 	<h1>Enter WOD results:</h1>
 
@@ -9,18 +7,15 @@
 		<% names = @wods.map {|moves| [moves.title]} %>
 		<%= f.select :name, names, :prompt => "Select One", :selected => params[:name] %><br><br>
 		<%= render 'form', f: f %>
-		<%= f.submit "Create WOD" %>	
-	<% end %>	
+		<%= f.submit "Create WOD" %>
+	<% end %>
 
 	<h1>WOD descriptions:</h1>
 
 	<% @owner_wods.each do |wod| %>
 		<%= render 'wodshow', wod: wod %>
-	<% end %>	
+	<% end %>
 </div>
 
 <div id="new_wod">
-</div> 
-
-
-
+</div>
