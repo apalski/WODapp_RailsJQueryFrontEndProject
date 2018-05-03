@@ -1,0 +1,10 @@
+
+<h3>  These are your current WOD PRs</h3>
+	<ul>
+		<% wods = current_user.userwods.by_pr.sort {|a,b| a.name <=> b.name} %>
+		<% wods.each do |wod| %>
+			<li><%= wod.name %></li>
+			<li><%= wod.date.strftime("%d %B %Y") %></li>
+			<li><%= wod.result %></li>
+		<% end %>	
+	</ul>	
