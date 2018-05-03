@@ -56,7 +56,6 @@ Userwod.prototype.indexWodTemplate = function() {
 	<li class="wodName">Wod: ${this.name}</li><br>
 	<li class="wodDate">Date Completed: ${this.date}</li><br> 
 	<li class="wodResult">Result Achieved: ${this.result}</li><br>		
-	<li class="wod_cftype">Wod done for: ${this.cftype}</li><br>
 	<li class="wodPr">PR? (true/false): ${this.pr}</li><br>
 	<div class="">
 		<a href="/users/${this.user_id}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
@@ -70,7 +69,6 @@ function Userwod(wod) {
 	this.id = wod.id;
 	this.name = wod.name;
 	this.date = wod.date;
-	this.cftype = wod.cftype;
 	this.result = wod.result;
 	this.pr = wod.pr;
 	this.user_id = wod.user_id;
@@ -97,7 +95,6 @@ Userwod.prototype.showWodTemplate = function() {
 	<li class="wodName">Wod: ${this.name}</li><br>
 	<li class="wodDate">Date Completed: ${this.date}</li><br> 
 	<li class="wodResult">Result Achieved: ${this.result}</li><br>		
-	<li class="wod_cftype">wod done for: ${this.cftype}</li><br>
 	<li class="wodPr">PR? (true/false): ${this.pr}</li><br>
 	<div class="">
 		<a href="/users/${this.user_id}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
@@ -156,7 +153,6 @@ Userwod.prototype.nextWodTemplate = function() {
 	<li class="wodTitle">Wod: ${this.name}</li><br>
 	<li class="wodDate">Date Completed: ${this.date}</li><br> 
 	<li class="wodResult">Result Achieved: ${this.result}</li><br>		
-	<li class="wod_cftype">Wod done for: ${this.cftype}</li><br>
 	<li class="wodPr">PR? (true/false): ${this.pr}</li><br>
 	<div class="">
 		<a href="/users/${this.user_id}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
