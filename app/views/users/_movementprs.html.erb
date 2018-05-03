@@ -1,0 +1,10 @@
+
+<h3>  These are your current movement PRs</h3>
+	<ul>
+		<% moves = current_user.usermovements.by_pr.sort {|a,b| a.name <=> b.name} %>
+		<% moves.each do |move| %>
+			<li><%= move.name %></li>
+			<li><%= move.date.strftime("%d %B %Y") %></li>
+			<li><%= move.result %></li>
+		<% end %>	
+	</ul>	
