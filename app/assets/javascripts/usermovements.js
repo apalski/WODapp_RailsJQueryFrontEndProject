@@ -17,15 +17,15 @@ Usermovement.prototype.newTemplate = function() {
 	<h3>New Movement</h3>
 	<li>ID: ${this.id}</li><br>
 	<li>Movement: ${this.name}</li><br>
-	<li>Date Completed: ${this.date}</li><br> 
-	<li>Result Achieved: ${this.result}</li><br>		
+	<li>Date Completed: ${this.date}</li><br>
+	<li>Result Achieved: ${this.result}</li><br>
 	<li>PR? (true/false): ${this.pr}</li><br>
 	<li>Comment: ${this.comment}</li><br>
-	<li>User Id: ${this.user_id}</li><br> 
+	<li>User Id: ${this.user_id}</li><br>
 	<div class="">
 		<a href="/users/${this.user_id}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div><br>
-	<h3>_____________________________________</h3> 
+	<h3>_____________________________________</h3>
 		`;
 	return newHtml;
 };
@@ -56,7 +56,6 @@ $(function() {
 	showMovements();
 	getNextMovement();
 	getPreviousMovement();
-	// newMovement();
 	getWods();
 	showWods();
 	getNextWod();
@@ -85,8 +84,8 @@ Usermovement.prototype.indexTemplate = function() {
 	let movementHtml = `
 	<li> ${this.id} </li><br>
 	<li class="movementName">Movement: ${this.name}</li><br>
-	<li class="movementDate">Date Completed: ${this.date}</li><br> 
-	<li class="movementResult">Result Achieved: ${this.result}</li><br>		
+	<li class="movementDate">Date Completed: ${this.date}</li><br>
+	<li class="movementResult">Result Achieved: ${this.result}</li><br>
 	<li class="movementPr">PR? (true/false): ${this.pr}</li><br>
 	<li class="movementComment">Comment: ${this.comment}</li><br>
 	<div class="">
@@ -95,7 +94,7 @@ Usermovement.prototype.indexTemplate = function() {
 	<h3>_____________________________________</h3>
 		`;
 	return movementHtml;
-}; 
+};
 
 function Usermovement(movement) {
 	this.id = movement.id;
@@ -127,18 +126,18 @@ function renderShowMovement(move) {
 Usermovement.prototype.showTemplate = function() {
 	let movementHtml = `
 	<li class="movementName">Movement: ${this.name}</li><br>
-	<li class="movementDate">Date Completed: ${this.date}</li><br> 
-	<li class="movementResult">Result Achieved: ${this.result}</li><br>		
+	<li class="movementDate">Date Completed: ${this.date}</li><br>
+	<li class="movementResult">Result Achieved: ${this.result}</li><br>
 	<li class="movementPr">PR? (true/false): ${this.pr}</li><br>
 	<li class="movementComment">Comment: ${this.comment}</li><br>
 	<div class="">
 		<a href="/users/${this.user_id}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div><br>
 	<div>
-	<button class="next-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Movement</button> | 
+	<button class="next-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Movement</button> |
 	<button class="previous-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Previous Movement</button>
 	</div>
-	<h3>_____________________________________</h3> 
+	<h3>_____________________________________</h3>
 		`;
 	return movementHtml;
 };
@@ -153,7 +152,7 @@ function getNextMovement() {
 		$.getJSON(`/users/${user_id}/usermovements/${next_id}`, function(next_move) {
 			if(next_move['name'] === undefined) {
 				alert('no more movements');
-			} else {			
+			} else {
 				renderNextMovement(next_move);
 			};
 		});
@@ -186,19 +185,18 @@ function renderNextMovement(move) {
 Usermovement.prototype.nextTemplate = function() {
 	let movementHtml = `
 	<li class="movementName">Movement: ${this.name}</li><br>
-	<li class="movementDate">Date Completed: ${this.date}</li><br> 
-	<li class="movementResult">Result Achieved: ${this.result}</li><br>		
+	<li class="movementDate">Date Completed: ${this.date}</li><br>
+	<li class="movementResult">Result Achieved: ${this.result}</li><br>
 	<li class="movementPr">PR? (true/false): ${this.pr}</li><br>
 	<li class="movementComment">Comment: ${this.comment}</li><br>
 	<div class="">
 		<a href="/users/${this.user_id}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div><br>
 	<div>
-	<button class="next-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Movement</button> | 
+	<button class="next-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Movement</button> |
 	<button class="previous-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Previous Movement</button>
 	</div>
 	<h3>_____________________________________</h3>
 		`;
-	return movementHtml;	
-}; 
-
+	return movementHtml;
+};
