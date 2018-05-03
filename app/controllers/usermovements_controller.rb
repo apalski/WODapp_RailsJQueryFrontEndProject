@@ -51,7 +51,7 @@ class UsermovementsController < ApplicationController
 		set_movement
 		set_usermovement
 		if @usermovement.update(usermovement_params)
-			render json: @usermovement
+			redirect_to user_path(current_user)
 		else
 			render :edit		
 		end	
