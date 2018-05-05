@@ -5,8 +5,7 @@ class Admin::MovementsController < ApplicationController
 
 	def index
 		@movements = Admin::Movement.all
-		@user = current_user
-    respond_to do |format|
+    	respond_to do |format|
 			format.html { render :index }
 			format.json { render json: @movements }
 		end
@@ -30,17 +29,20 @@ class Admin::MovementsController < ApplicationController
 
 	def show
 		set_movement
+		respond_to do |format|
+			format.html { render :show }
+			format.json { render json: @movement }
+		end	
 	end
 
 	def edit
 		set_movement
-
 	end
 
 	def update
 		set_movement
 		if @movement.update(movement_params)
-			redirect_to admin_movement_path(@movement)
+			redirect_to user_path(current_user)
 		else
 			render :edit
 		end
