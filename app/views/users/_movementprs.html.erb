@@ -1,5 +1,5 @@
 
-<h3>  These are your current movement PRs</h3>
+<h3>Your current Movement PRs:</h3>
 	<ul>
 		<% moves = current_user.usermovements.by_pr.sort {|a,b| a.name <=> b.name} %>
 		<% moves.each do |move| %>

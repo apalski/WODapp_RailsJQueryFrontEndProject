@@ -1,5 +1,5 @@
 
-<h3>  These are your current WOD PRs</h3>
+<h3>Your current WOD PRs:</h3>
 	<ul>
 		<% wods = current_user.userwods.by_pr.sort {|a,b| a.name <=> b.name} %>
 		<% wods.each do |wod| %>
