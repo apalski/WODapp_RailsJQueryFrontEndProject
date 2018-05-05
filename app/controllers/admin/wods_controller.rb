@@ -5,7 +5,11 @@ class Admin::WodsController < ApplicationController
 
 	def index
 		# alphabetize the list of wods
-		@wods = Admin::Wod.all.sort_by {|wod| wod.title.downcase}
+		@wods = Admin::Wod.all
+		respond_to do |format|
+			format.html {render :index }
+			format.json {render json: @wods }
+		end
 	end
 
 	def new
@@ -28,7 +32,11 @@ class Admin::WodsController < ApplicationController
 
 	def show
 		set_wod
-		@movement = @wod.movements
+		@movements = @wod.movements
+		respond_to do |format|
+			format.html {render :show }
+			format.json {render json: { wod: @wod, movements: @movements } }
+		end
 	end
 
 	def edit
@@ -40,7 +48,7 @@ class Admin::WodsController < ApplicationController
 		set_movements
 		set_wod
 		if @wod.update(wod_params)
-			redirect_to admin_wod_path(@wod)
+			redirect_to user_path(current_user)
 		else
 			render :edit
 		end		
