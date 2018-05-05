@@ -3,8 +3,10 @@
 //**********************************************************************************
 
 $(function() {
-	getAdminMovements();
+  getAdminMovements();
   showAdminMovements();
+  getNextAdminMovement();
+  getPreviousAdminMovement();
 });
 
 function getAdminMovements() {
@@ -50,7 +52,7 @@ function showAdminMovements() {
   $('a.show_adminmovements').on('click', function(e) {
     e.preventDefault();
     $('.crossfit-container').html('');
-    $.getJSON(this.href, function(adminmove) {
+    $.getJSON(this.href, function(adminmove) {	
       renderShowAdminMovement(adminmove);
     });
   });
@@ -71,7 +73,41 @@ Movement.prototype.showAdminTemplate = function() {
 	<div class="">
 		<a href="/admin/movements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div>
+	<div>
+	<button class="next-adminmovement" data-id="${this.id}" id="${this.owner_id}" name="${this.name}">Next Movement</button> |
+	<button class="previous-adminmovement" data-id="${this.id}" id="${this.owner_id}" name="${this.name}">Previous Movement</button>
+	</div>
 	<h3>_____________________________________</h3>
 		`;
 	return oneMovementHtml;
+};
+
+function getNextAdminMovement() {
+	$(document).on('click', '.next-adminmovement', function(e) {
+		e.preventDefault();
+		let id = $(this).attr('data-id');
+		let next_id = (parseInt(id) + 1).toString();
+		let name = $(this).attr('name');
+		$.getJSON(`/admin/movements/${next_id}`, function(next_adminmove) {
+			renderNextAdminMovement(next_adminmove);
+		});
+	});
+};
+
+function getPreviousAdminMovement() {
+	$(document).on('click', '.previous-adminmovement', function(e) {
+		e.preventDefault();
+		let id = $(this).attr('data-id');
+		let prev_id = (parseInt(id) - 1).toString();
+		let name = $(this).attr('name');
+		$.getJSON(`/admin/movements/${prev_id}`, function(prev_adminmove) {
+			renderNextAdminMovement(prev_adminmove);
+		});
+	});
+};
+
+function renderNextAdminMovement(adminmove) {
+	let newNextAdminMovement = new Movement(adminmove);
+	let adminMovementNextHtml = newNextAdminMovement.showAdminTemplate();
+	$('.crossfit-container').html(adminMovementNextHtml);
 };
