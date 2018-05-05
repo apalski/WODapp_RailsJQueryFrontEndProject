@@ -3,3 +3,4 @@
 //= require usermovements
 //= require userwods
 //= require adminmovements
+//= require adminwods
