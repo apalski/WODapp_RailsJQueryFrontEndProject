@@ -120,11 +120,15 @@ Movement.prototype.addMovementTemplate = function() {
 function getNextAdminWod() {
 	$(document).on('click', '.next-adminwod', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let next_id = (parseInt(id) + 1).toString();
-		let title = $(this).attr('title');
 		$.getJSON(`/admin/wods/${next_id}`, function(next_adminwod) {
-			renderNextAdminWod(next_adminwod);
+			renderShowAdminWod(next_adminwod['wod']);
+			renderAddWodMovements(next_adminwod['movements']);
+      		renderWodAction(next_adminwod['wod']);
 		});
 	});
 };
@@ -132,11 +136,15 @@ function getNextAdminWod() {
 function getPreviousAdminWod() {
 	$(document).on('click', '.previous-adminwod', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let prev_id = (parseInt(id) - 1).toString();
-		let title = $(this).attr('title');
 		$.getJSON(`/admin/wods/${prev_id}`, function(prev_adminwod) {
-			renderNextAdminWod(prev_adminwod);
+			renderShowAdminWod(prev_adminwod['wod']);
+			renderAddWodMovements(prev_adminwod['movements']);
+      		renderWodAction(prev_adminwod['wod']);
 		});
 	});
 };
