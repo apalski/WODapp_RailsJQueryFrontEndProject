@@ -41,7 +41,8 @@
 		set_user
 		@usermovement = @user.usermovements.all.first
 		@userwod = @user.userwods.all.first
-    @movement = Admin::Movement.all
+    	@movement = Admin::Movement.all.first
+    	@wod = Admin::Wod.all.first
 	end
 
 	def edit
