@@ -36,6 +36,8 @@ function getWods() {
 	$('a.load_wods').on('click', function(e) {
 		e.preventDefault();
 		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		$.getJSON(this.href, function(wods) {
 			renderWods(wods);
 		});
@@ -78,6 +80,8 @@ function showWods() {
 	$('a.show_wods').on('click', function(e) {
 		e.preventDefault();
 		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		$.getJSON(this.href, function(wod) {
 			renderShowWod(wod);
 		});
@@ -111,6 +115,9 @@ Userwod.prototype.showWodTemplate = function() {
 function getNextWod() {
 	$(document).on('click', '.next-wod', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let next_id = (parseInt(id) + 1).toString();
 		let user_id = $(this).attr('id');
@@ -128,6 +135,9 @@ function getNextWod() {
 function getPreviousWod() {
 	$(document).on('click', '.previous-wod', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let prev_id = (parseInt(id) - 1).toString();
 		let user_id = $(this).attr('id');

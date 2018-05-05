@@ -13,6 +13,8 @@ function getAdminMovements() {
 	$('a.load_adminmovements').on('click', function(e) {
 		e.preventDefault();
 		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		$.getJSON(this.href, function(adminmovements) {
 			renderAdminMovements(adminmovements);
 		});
@@ -52,6 +54,8 @@ function showAdminMovements() {
   $('a.show_adminmovements').on('click', function(e) {
     e.preventDefault();
     $('.crossfit-container').html('');
+    $('.movement-container').html('');
+    $('.wod_actions').html('');
     $.getJSON(this.href, function(adminmove) {	
       renderShowAdminMovement(adminmove);
     });
@@ -85,6 +89,9 @@ Movement.prototype.showAdminTemplate = function() {
 function getNextAdminMovement() {
 	$(document).on('click', '.next-adminmovement', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let next_id = (parseInt(id) + 1).toString();
 		let name = $(this).attr('name');
@@ -97,6 +104,9 @@ function getNextAdminMovement() {
 function getPreviousAdminMovement() {
 	$(document).on('click', '.previous-adminmovement', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let prev_id = (parseInt(id) - 1).toString();
 		let name = $(this).attr('name');

@@ -66,6 +66,8 @@ function getMovements() {
 	$('a.load_movements').on('click', function(e) {
 		e.preventDefault();
 		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		$.getJSON(this.href, function(movements) {
 			renderMovements(movements);
 		});
@@ -110,6 +112,8 @@ function showMovements() {
 	$('a.show_movements').on('click', function(e) {
 		e.preventDefault();
 		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		$.getJSON(this.href, function(move) {
 			renderShowMovement(move);
 		});
@@ -144,6 +148,9 @@ Usermovement.prototype.showTemplate = function() {
 function getNextMovement() {
 	$(document).on('click', '.next-movement', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let next_id = (parseInt(id) + 1).toString();
 		let user_id = $(this).attr('id');
@@ -161,6 +168,9 @@ function getNextMovement() {
 function getPreviousMovement() {
 	$(document).on('click', '.previous-movement', function(e) {
 		e.preventDefault();
+		$('.crossfit-container').html('');
+	    $('.movement-container').html('');
+	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
 		let prev_id = (parseInt(id) - 1).toString();
 		let user_id = $(this).attr('id');
