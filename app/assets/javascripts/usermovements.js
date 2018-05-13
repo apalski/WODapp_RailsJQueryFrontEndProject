@@ -9,7 +9,7 @@ function Usermovement(data) {
 	this.result = data.result;
 	this.pr = data.pr;
 	this.comment = data.comment;
-	this.user_id = data.user_id;
+	this.userId = data.user_id;
 };
 
 Usermovement.prototype.newTemplate = function() {
@@ -17,15 +17,15 @@ Usermovement.prototype.newTemplate = function() {
 	<h3>New Movement</h3>
 	<li>ID: ${this.id}</li><br>
 	<li>Movement: ${this.name}</li><br>
-	<li>Date Completed: ${this.date}</li><br> 
-	<li>Result Achieved: ${this.result}</li><br>		
+	<li>Date Completed: ${this.date}</li><br>
+	<li>Result Achieved: ${this.result}</li><br>
 	<li>PR? (true/false): ${this.pr}</li><br>
 	<li>Comment: ${this.comment}</li><br>
-	<li>User Id: ${this.user_id}</li><br> 
+	<li>User Id: ${this.userId}</li><br>
 	<div class="">
-		<a href="/users/${this.user_id}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
+		<a href="/users/${this.userId}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div><br>
-	<h3>_____________________________________</h3> 
+	<h3>_____________________________________</h3>
 		`;
 	return newHtml;
 };
@@ -62,6 +62,19 @@ $(function() {
 	getPreviousWod();
 });
 
+Usermovement.prototype.filterTemplate = function() {
+	let filterHtml = `
+
+	`
+	return filterHtml
+}
+
+function checkPr() {
+	return this.pr === true;
+}
+
+<button type="submit" value="submit" id="filter_movement">Filter</button>
+
 function getMovements() {
 	$('a.load_movements').on('click', function(e) {
 		e.preventDefault();
@@ -78,6 +91,7 @@ function renderMovements(movements) {
 	movements.forEach(movement => {
 		let newMovement = new Usermovement(movement);
 		let movementHtml = newMovement.indexTemplate();
+		this.pr.filter()
 		$('.crossfit-container').append(movementHtml);
 	});
 };
@@ -86,8 +100,8 @@ Usermovement.prototype.indexTemplate = function() {
 	let movementHtml = `
 	<li> ${this.id} </li><br>
 	<li class="movementName">Movement: ${this.name}</li><br>
-	<li class="movementDate">Date Completed: ${this.date}</li><br> 
-	<li class="movementResult">Result Achieved: ${this.result}</li><br>		
+	<li class="movementDate">Date Completed: ${this.date}</li><br>
+	<li class="movementResult">Result Achieved: ${this.result}</li><br>
 	<li class="movementPr">PR? (true/false): ${this.pr}</li><br>
 	<li class="movementComment">Comment: ${this.comment}</li><br>
 	<div class="">
@@ -96,7 +110,7 @@ Usermovement.prototype.indexTemplate = function() {
 	<h3>_____________________________________</h3>
 		`;
 	return movementHtml;
-}; 
+};
 
 function Usermovement(movement) {
 	this.id = movement.id;
@@ -105,7 +119,7 @@ function Usermovement(movement) {
 	this.result = movement.result;
 	this.pr = movement.pr;
 	this.comment = movement.comment;
-	this.user_id = movement.user_id;
+	this.userId = movement.user_id;
 };
 
 function showMovements() {
@@ -129,18 +143,18 @@ function renderShowMovement(move) {
 Usermovement.prototype.showTemplate = function() {
 	let movementHtml = `
 	<li class="movementName">Movement: ${this.name}</li><br>
-	<li class="movementDate">Date Completed: ${this.date}</li><br> 
-	<li class="movementResult">Result Achieved: ${this.result}</li><br>		
+	<li class="movementDate">Date Completed: ${this.date}</li><br>
+	<li class="movementResult">Result Achieved: ${this.result}</li><br>
 	<li class="movementPr">PR? (true/false): ${this.pr}</li><br>
 	<li class="movementComment">Comment: ${this.comment}</li><br>
 	<div class="">
-		<a href="/users/${this.user_id}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
+		<a href="/users/${this.userId}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div><br>
 	<div>
-	<button class="next-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Movement</button> | 
-	<button class="previous-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Previous Movement</button>
+	<button class="next-movement" data-id="${this.id}" id="${this.userId}" name="${this.name}">Next Movement</button> |
+	<button class="previous-movement" data-id="${this.id}" id="${this.userId}" name="${this.name}">Previous Movement</button>
 	</div>
-	<h3>_____________________________________</h3> 
+	<h3>_____________________________________</h3>
 		`;
 	return movementHtml;
 };
@@ -152,14 +166,14 @@ function getNextMovement() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let next_id = (parseInt(id) + 1).toString();
-		let user_id = $(this).attr('id');
+		let nextId = (parseInt(id) + 1).toString();
+		let userId = $(this).attr('id');
 		let name = $(this).attr('name');
-		$.getJSON(`/users/${user_id}/usermovements/${next_id}`, function(next_move) {
-			if(next_move['name'] === undefined) {
+		$.getJSON(`/users/${userId}/usermovements/${nextId}`, function(nextMove) {
+			if(nextMove['name'] === undefined) {
 				alert('no more movements');
-			} else {			
-				renderNextMovement(next_move);
+			} else {
+				renderNextMovement(nextMove);
 			};
 		});
 	});
@@ -172,14 +186,14 @@ function getPreviousMovement() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let prev_id = (parseInt(id) - 1).toString();
-		let user_id = $(this).attr('id');
+		let prevId = (parseInt(id) - 1).toString();
+		let userId = $(this).attr('id');
 		let name = $(this).attr('name');
-		$.getJSON(`/users/${user_id}/usermovements/${prev_id}`, function(prev_move) {
-			if(prev_move['name'] === undefined) {
+		$.getJSON(`/users/${userId}/usermovements/${prevId}`, function(prevMove) {
+			if(prevMove['name'] === undefined) {
 				alert('no more movements');
 			} else {
-				renderNextMovement(prev_move);
+				renderNextMovement(prevMove);
 			};
 		});
 	});
@@ -194,19 +208,18 @@ function renderNextMovement(move) {
 Usermovement.prototype.nextTemplate = function() {
 	let movementHtml = `
 	<li class="movementName">Movement: ${this.name}</li><br>
-	<li class="movementDate">Date Completed: ${this.date}</li><br> 
-	<li class="movementResult">Result Achieved: ${this.result}</li><br>		
+	<li class="movementDate">Date Completed: ${this.date}</li><br>
+	<li class="movementResult">Result Achieved: ${this.result}</li><br>
 	<li class="movementPr">PR? (true/false): ${this.pr}</li><br>
 	<li class="movementComment">Comment: ${this.comment}</li><br>
 	<div class="">
-		<a href="/users/${this.user_id}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
+		<a href="/users/${this.userId}/usermovements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div><br>
 	<div>
-	<button class="next-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Movement</button> | 
-	<button class="previous-movement" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Previous Movement</button>
+	<button class="next-movement" data-id="${this.id}" id="${this.userId}" name="${this.name}">Next Movement</button> |
+	<button class="previous-movement" data-id="${this.id}" id="${this.userId}" name="${this.name}">Previous Movement</button>
 	</div>
 	<h3>_____________________________________</h3>
 		`;
-	return movementHtml;	
-}; 
-
+	return movementHtml;
+};

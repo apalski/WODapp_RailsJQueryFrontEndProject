@@ -8,7 +8,7 @@ function Userwod(data) {
 	this.date = data.date;
 	this.result = data.result;
 	this.pr = data.pr;
-	this.user_id = data.user_id;
+	this.userId = data.user_id;
 };
 
 $(function() {
@@ -46,8 +46,8 @@ function getWods() {
 
 function renderWods(wods) {
 	wods.forEach(wod => {
-		let newwod = new Userwod(wod);
-		let wodHtml = newwod.indexWodTemplate();
+		let newWod = new Userwod(wod);
+		let wodHtml = newWod.indexWodTemplate();
 		$('.crossfit-container').append(wodHtml);
 	});
 };
@@ -56,16 +56,16 @@ Userwod.prototype.indexWodTemplate = function() {
 	let wodHtml = `
 	<li> ${this.id} </li><br>
 	<li class="wodName">Wod: ${this.name}</li><br>
-	<li class="wodDate">Date Completed: ${this.date}</li><br> 
-	<li class="wodResult">Result Achieved: ${this.result}</li><br>		
+	<li class="wodDate">Date Completed: ${this.date}</li><br>
+	<li class="wodResult">Result Achieved: ${this.result}</li><br>
 	<li class="wodPr">PR? (true/false): ${this.pr}</li><br>
 	<div class="">
-		<a href="/users/${this.user_id}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
+		<a href="/users/${this.userId}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
 	</div>
 	<h3>_____________________________________</h3>
 		`;
 	return wodHtml;
-}; 
+};
 
 function Userwod(wod) {
 	this.id = wod.id;
@@ -73,7 +73,7 @@ function Userwod(wod) {
 	this.date = wod.date;
 	this.result = wod.result;
 	this.pr = wod.pr;
-	this.user_id = wod.user_id;
+	this.userId = wod.user_id;
 };
 
 function showWods() {
@@ -97,17 +97,17 @@ function renderShowWod(wod) {
 Userwod.prototype.showWodTemplate = function() {
 	let wodHtml = `
 	<li class="wodName">Wod: ${this.name}</li><br>
-	<li class="wodDate">Date Completed: ${this.date}</li><br> 
-	<li class="wodResult">Result Achieved: ${this.result}</li><br>		
+	<li class="wodDate">Date Completed: ${this.date}</li><br>
+	<li class="wodResult">Result Achieved: ${this.result}</li><br>
 	<li class="wodPr">PR? (true/false): ${this.pr}</li><br>
 	<div class="">
-		<a href="/users/${this.user_id}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
+		<a href="/users/${this.userId}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
 	</div><br>
 	<div>
-	<button class="next-wod" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Wod</button> | 
-	<button class="previous-wod" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Previous Wod</button>
+	<button class="next-wod" data-id="${this.id}" id="${this.userId}" name="${this.name}">Next Wod</button> |
+	<button class="previous-wod" data-id="${this.id}" id="${this.userId}" name="${this.name}">Previous Wod</button>
 	</div>
-	<h3>_____________________________________</h3> 
+	<h3>_____________________________________</h3>
 		`;
 	return wodHtml;
 };
@@ -119,14 +119,14 @@ function getNextWod() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let next_id = (parseInt(id) + 1).toString();
-		let user_id = $(this).attr('id');
+		let nextId = (parseInt(id) + 1).toString();
+		let userId = $(this).attr('id');
 		let name = $(this).attr('name');
-		$.getJSON(`/users/${user_id}/userwods/${next_id}`, function(next_wod) {
-			if(next_wod['name'] === undefined) {
+		$.getJSON(`/users/${userId}/userwods/${nextId}`, function(nextWod) {
+			if(nextWod['name'] === undefined) {
 				alert('no more wods');
-			} else {			
-				renderNextWod(next_wod);
+			} else {
+				renderNextWod(nextWod);
 			};
 		});
 	});
@@ -139,14 +139,14 @@ function getPreviousWod() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let prev_id = (parseInt(id) - 1).toString();
-		let user_id = $(this).attr('id');
+		let prevId = (parseInt(id) - 1).toString();
+		let userId = $(this).attr('id');
 		let name = $(this).attr('name');
-		$.getJSON(`/users/${user_id}/userwods/${prev_id}`, function(prev_wod) {
-			if(prev_wod['name'] === undefined) {
+		$.getJSON(`/users/${userId}/userwods/${prevId}`, function(prevWod) {
+			if(prevWod['name'] === undefined) {
 				alert('no more wods');
 			} else {
-				renderNextWod(prev_wod);
+				renderNextWod(prevWod);
 			};
 		});
 	});
@@ -161,18 +161,17 @@ function renderNextWod(wod) {
 Userwod.prototype.nextWodTemplate = function() {
 	let wodHtml = `
 	<li class="wodTitle">Wod: ${this.name}</li><br>
-	<li class="wodDate">Date Completed: ${this.date}</li><br> 
-	<li class="wodResult">Result Achieved: ${this.result}</li><br>		
+	<li class="wodDate">Date Completed: ${this.date}</li><br>
+	<li class="wodResult">Result Achieved: ${this.result}</li><br>
 	<li class="wodPr">PR? (true/false): ${this.pr}</li><br>
 	<div class="">
-		<a href="/users/${this.user_id}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
+		<a href="/users/${this.userId}/userwods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
 	</div><br>
 	<div>
-	<button class="next-wod" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Next Wod</button> | 
-	<button class="previous-wod" data-id="${this.id}" id="${this.user_id}" name="${this.name}">Previous Wod</button>
+	<button class="next-wod" data-id="${this.id}" id="${this.userId}" name="${this.name}">Next Wod</button> |
+	<button class="previous-wod" data-id="${this.id}" id="${this.userId}" name="${this.name}">Previous Wod</button>
 	</div>
 	<h3>_____________________________________</h3>
 		`;
-	return wodHtml;	
-}; 
-
+	return wodHtml;
+};

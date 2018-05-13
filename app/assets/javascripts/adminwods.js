@@ -15,14 +15,14 @@ function getAdminWods() {
 		$('.crossfit-container').html('');
 		$('.movement-container').html('');
 		$('.wod_actions').html('');
-		$.getJSON(this.href, function(adminwods) {
-			renderAdminWods(adminwods);
+		$.getJSON(this.href, function(adminWods) {
+			renderAdminWods(adminWods);
 		});
 	});
 };
 
-function renderAdminWods(adminwods) {
-  adminwods.forEach(adminwod => {
+function renderAdminWods(adminWods) {
+  adminWods.forEach(adminwod => {
     let newAdminWod = new Wod(adminwod);
     let adminwodHtml = newAdminWod.adminIndexWodTemplate();
     $('.crossfit-container').append(adminwodHtml);
@@ -40,14 +40,15 @@ Wod.prototype.adminIndexWodTemplate = function() {
 	</div>
 	<h3>_____________________________________</h3>
 		`;
-	return adminwodHtml;
+	return adminWodHtml;
 };
 
 function Wod(adminwod) {
 	this.id = adminwod.id;
 	this.title = adminwod.title;
 	this.description = adminwod.description;
-	this.wod_type = adminwod.wod_type;
+	this.wodType = adminwod.wod_type;
+  this.ownerId = adminWod.owner_id;
 };
 
 function showAdminWods() {
@@ -56,7 +57,7 @@ function showAdminWods() {
     $('.crossfit-container').html('');
     $('.movement-container').html('');
     $('.wod_actions').html('');
-    $.getJSON(this.href, function(adminwod) {	
+    $.getJSON(this.href, function(adminwod) {
       renderShowAdminWod(adminwod['wod']);
       renderAddWodMovements(adminwod['movements']);
       renderWodAction(adminwod['wod']);
@@ -65,20 +66,20 @@ function showAdminWods() {
 };
 
 function renderShowAdminWod(adminwod) {
-  let oneWod = new Wod(adminwod);
+  let oneWod = new Wod(adminWod);
   let oneWodHtml = oneWod.showAdminWodTemplate();
   $('.crossfit-container').append(oneWodHtml);
 };
 
-function renderWodAction(adminwod) {
-	let wodaction = new Wod(adminwod);
-	let wodActionHtml = wodaction.wodActionTemplate();
+function renderWodAction(adminWod) {
+	let wodAction = new Wod(adminWod);
+	let wodActionHtml = wodAction.wodActionTemplate();
 	$('.wod_actions').append(wodActionHtml);
 }
 
-function renderAddWodMovements(adminwods) {
-	adminwods.forEach(adminwod => {
-		let wodMovement = new Movement(adminwod);
+function renderAddWodMovements(adminWods) {
+	adminWods.forEach(adminWod => {
+		let wodMovement = new Movement(adminWod);
 		let wodMovementHtml = wodMovement.addMovementTemplate();
 		$('.movement-container').append(wodMovementHtml);
 	});
@@ -88,7 +89,7 @@ Wod.prototype.showAdminWodTemplate = function() {
 	let oneWodHtml = `
 	<li> ${this.id} </li><br>
 	<li class="adminwodName">Wod: ${this.title}</li><br>
-	<li class="adminmwodType">Wod Type: ${this.wod_type}</li><br>
+	<li class="adminmwodType">Wod Type: ${this.wodType}</li><br>
 	<li class="adminwodDescription">Description: ${this.description}</li><br>
 		`;
 	return oneWodHtml;
@@ -100,8 +101,8 @@ Wod.prototype.wodActionTemplate = function() {
 		<a href="/admin/wods/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Wod</a>
 	</div>
 	<div>
-	<button class="next-adminwod" data-id="${this.id}" id="${this.owner_id}" name="${this.name}">Next WOD</button> |
-	<button class="previous-adminwod" data-id="${this.id}" id="${this.owner_id}" name="${this.name}">Previous Wod</button>
+	<button class="next-adminwod" data-id="${this.id}" id="${this.ownerId}" name="${this.name}">Next WOD</button> |
+	<button class="previous-adminwod" data-id="${this.id}" id="${this.ownerId}" name="${this.name}">Previous Wod</button>
 	</div>
 	<h3>_____________________________________</h3>
 	`
@@ -112,7 +113,7 @@ Movement.prototype.addMovementTemplate = function() {
 	let wodMovementHtml = `
 	<li>Movement Name: ${this.name}</li><br>
 	<li>Movement Quantity: ${this.quantity}</li><br>
-	<li>Movement Type: ${this.movement_type}</li><br>
+	<li>Movement Type: ${this.movementType}</li><br>
 	`
 	return wodMovementHtml;
 }
@@ -124,11 +125,11 @@ function getNextAdminWod() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let next_id = (parseInt(id) + 1).toString();
-		$.getJSON(`/admin/wods/${next_id}`, function(next_adminwod) {
-			renderShowAdminWod(next_adminwod['wod']);
-			renderAddWodMovements(next_adminwod['movements']);
-      		renderWodAction(next_adminwod['wod']);
+		let nextId = (parseInt(id) + 1).toString();
+		$.getJSON(`/admin/wods/${nextId}`, function(nextAdminWod) {
+			renderShowAdminWod(nextAdminWod['wod']);
+			renderAddWodMovements(nextAdminWod['movements']);
+      		renderWodAction(nextAdminWod['wod']);
 		});
 	});
 };
@@ -140,17 +141,17 @@ function getPreviousAdminWod() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let prev_id = (parseInt(id) - 1).toString();
-		$.getJSON(`/admin/wods/${prev_id}`, function(prev_adminwod) {
-			renderShowAdminWod(prev_adminwod['wod']);
-			renderAddWodMovements(prev_adminwod['movements']);
-      		renderWodAction(prev_adminwod['wod']);
+		let prevId = (parseInt(id) - 1).toString();
+		$.getJSON(`/admin/wods/${prevId}`, function(prevAdminWod) {
+			renderShowAdminWod(prevAdminWod['wod']);
+			renderAddWodMovements(prevAdminWod['movements']);
+      		renderWodAction(prevAdminWod['wod']);
 		});
 	});
 };
 
-function renderNextAdminWod(adminwod) {
-	let newNextAdminWod = new Wod(adminwod);
+function renderNextAdminWod(adminWod) {
+	let newNextAdminWod = new Wod(adminWod);
 	let adminWodNextHtml = newNextAdminWod.showAdminWodTemplate();
 	$('.crossfit-container').html(adminWodNextHtml);
 };

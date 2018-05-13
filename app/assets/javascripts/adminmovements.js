@@ -15,39 +15,40 @@ function getAdminMovements() {
 		$('.crossfit-container').html('');
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
-		$.getJSON(this.href, function(adminmovements) {
-			renderAdminMovements(adminmovements);
+		$.getJSON(this.href, function(adminMovements) {
+			renderAdminMovements(adminMovements);
 		});
 	});
 };
 
-function renderAdminMovements(adminmovements) {
-  adminmovements.forEach(adminmovement => {
-    let newAdminMovement = new Movement(adminmovement);
-    let adminmovementHtml = newAdminMovement.adminIndexTemplate();
-    $('.crossfit-container').append(adminmovementHtml);
+function renderAdminMovements(adminMovements) {
+  adminMovements.forEach(adminMovement => {
+    let newAdminMovement = new Movement(adminMovement);
+    let adminMovementHtml = newAdminMovement.adminIndexTemplate();
+    $('.crossfit-container').append(adminMovementHtml);
   });
 };
 
 Movement.prototype.adminIndexTemplate = function() {
-	let adminmovementHtml = `
+	let adminMovementHtml = `
 	<li> ${this.id} </li><br>
 	<li class="adminmovementName">Movement: ${this.name}</li><br>
-	<li class="adminmovementType">Movement Type: ${this.movement_type}</li><br>
+	<li class="adminmovementType">Movement Type: ${this.movementType}</li><br>
 	<li class="adminmovementQuantity">Quantity: ${this.quantity}</li><br>
 	<div class="">
 		<a href="/admin/movements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div>
 	<h3>_____________________________________</h3>
 		`;
-	return adminmovementHtml;
+	return adminMovementHtml;
 };
 
-function Movement(adminmovement) {
-	this.id = adminmovement.id;
-	this.name = adminmovement.name;
-	this.movement_type = adminmovement.movement_type;
-	this.quantity = adminmovement.quantity;
+function Movement(adminMovement) {
+	this.id = adminMovement.id;
+	this.name = adminMovement.name;
+	this.movementType = adminMovement.movement_type;
+	this.quantity = adminMovement.quantity;
+  this.ownerId = adminMovement.owner_id;
 };
 
 function showAdminMovements() {
@@ -56,14 +57,14 @@ function showAdminMovements() {
     $('.crossfit-container').html('');
     $('.movement-container').html('');
     $('.wod_actions').html('');
-    $.getJSON(this.href, function(adminmove) {	
-      renderShowAdminMovement(adminmove);
+    $.getJSON(this.href, function(adminMove) {
+      renderShowAdminMovement(adminMove);
     });
   });
 };
 
-function renderShowAdminMovement(adminmove) {
-  let oneMovement = new Movement(adminmove);
+function renderShowAdminMovement(adminMove) {
+  let oneMovement = new Movement(adminMove);
   let oneMovementHtml = oneMovement.showAdminTemplate();
   $('.crossfit-container').append(oneMovementHtml);
 }
@@ -72,14 +73,14 @@ Movement.prototype.showAdminTemplate = function() {
 	let oneMovementHtml = `
 	<li> ${this.id} </li><br>
 	<li class="adminmovementName">Movement: ${this.name}</li><br>
-	<li class="adminmovementType">Movement Type: ${this.movement_type}</li><br>
+	<li class="adminmovementType">Movement Type: ${this.movementType}</li><br>
 	<li class="adminmovementQuantity">Quantity: ${this.quantity}</li><br>
 	<div class="">
 		<a href="/admin/movements/${this.id}/edit" data-id="${this.id} class="show_link">Edit/Delete Movement</a>
 	</div>
 	<div>
-	<button class="next-adminmovement" data-id="${this.id}" id="${this.owner_id}" name="${this.name}">Next Movement</button> |
-	<button class="previous-adminmovement" data-id="${this.id}" id="${this.owner_id}" name="${this.name}">Previous Movement</button>
+	<button class="next-adminmovement" data-id="${this.id}" id="${this.ownerId}" name="${this.name}">Next Movement</button> |
+	<button class="previous-adminmovement" data-id="${this.id}" id="${this.ownerId}" name="${this.name}">Previous Movement</button>
 	</div>
 	<h3>_____________________________________</h3>
 		`;
@@ -93,10 +94,10 @@ function getNextAdminMovement() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let next_id = (parseInt(id) + 1).toString();
+		let nextId = (parseInt(id) + 1).toString();
 		let name = $(this).attr('name');
-		$.getJSON(`/admin/movements/${next_id}`, function(next_adminmove) {
-			renderNextAdminMovement(next_adminmove);
+		$.getJSON(`/admin/movements/${nextId}`, function(nextAdminMove) {
+			renderNextAdminMovement(nextAdminMove);
 		});
 	});
 };
@@ -108,16 +109,16 @@ function getPreviousAdminMovement() {
 	    $('.movement-container').html('');
 	    $('.wod_actions').html('');
 		let id = $(this).attr('data-id');
-		let prev_id = (parseInt(id) - 1).toString();
+		let prevId = (parseInt(id) - 1).toString();
 		let name = $(this).attr('name');
-		$.getJSON(`/admin/movements/${prev_id}`, function(prev_adminmove) {
-			renderNextAdminMovement(prev_adminmove);
+		$.getJSON(`/admin/movements/${prevId}`, function(prevAdminMove) {
+			renderNextAdminMovement(prevAdminMove);
 		});
 	});
 };
 
-function renderNextAdminMovement(adminmove) {
-	let newNextAdminMovement = new Movement(adminmove);
+function renderNextAdminMovement(adminMove) {
+	let newNextAdminMovement = new Movement(adminMove);
 	let adminMovementNextHtml = newNextAdminMovement.showAdminTemplate();
 	$('.crossfit-container').html(adminMovementNextHtml);
 };
